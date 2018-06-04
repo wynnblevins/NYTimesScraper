@@ -1,0 +1,15 @@
+
+/* .times-font {
+  color: #333333;
+  font-family: 'Times New Roman', Times, serif;
+} */
+
+.jumboHeader {
+  width: 100%;
+}
+
+.jumboHeaderImg {
+  background-image: url("../images/newspapers-hdr.png");
+  background-size: cover;
+  width: 100%;
+}
