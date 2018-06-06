@@ -10,6 +10,8 @@ var scraper = (function ($){
   });
 
   $('#scrapeButton').click(function () {
-    console.log('Scrape button was clicked.');
+    $.get('/api/articles', function (data) {
+      console.log(data);
+    });
   });
 })($);

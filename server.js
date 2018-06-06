@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
@@ -16,6 +17,7 @@ var PORT = process.env.PORT || 8080;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+require('./controllers/articles_endpoint.js')(app);
 require('./controllers/html_endpoints.js')(app);
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
