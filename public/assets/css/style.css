@@ -12,3 +12,20 @@
   background-size: cover;
   width: 100%;
 }
+
+.article {
+  background-color: #008894;
+  margin-top: 15px;
+  padding: 15px;
+}
+
+.abstractHdr {
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
