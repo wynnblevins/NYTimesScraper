@@ -15,7 +15,7 @@ var scraper = (function ($){
     // Built by LucyBot. www.lucybot.com
     let url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
     url += '?' + $.param({
-      'api-key': "e8d7b2a2149143378f5d20b5f78bf0ee"
+      'api-key': "e8d7b2a2149143378f5d20b5f78bf0ee",
     });
     
     $.ajax({
@@ -26,6 +26,8 @@ var scraper = (function ($){
         let currDoc = result.response.docs[i];
         attachArticle(currDoc);    
       }
+
+      $('#articlesAddedModal').modal('show');      
     }).fail(function(err) {
       throw err;
     });
