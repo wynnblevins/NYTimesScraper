@@ -40,7 +40,7 @@ var scraper = (function ($){
           <h3 class="abstractHdr">${article.headline.main}</h3>
         </div>
         <div class="col-2">
-          <button class="saveArticleBtn btn btn-info">Save Article</button>
+          <button class="saveArticleBtn btn btn-info" data-articleId="${article._id}">Save Article</button>
         </div>
       </div>
     `;

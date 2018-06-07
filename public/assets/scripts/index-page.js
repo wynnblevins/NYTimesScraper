@@ -6,8 +6,8 @@
   }
 
   $(document).on('click', '.saveArticleBtn', function () {
-    var $articleButton = $(this);
-    //var clickedArticleId = $articleButton.data()
+    var articleId = $(this).data('articleid');
+    console.log(articleId);
   });
 
   $(document).ready(function () {
