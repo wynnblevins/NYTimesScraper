@@ -20,13 +20,14 @@ var scraper = (function ($){
   });
 
   let attachArticle = function (article) {
+
     let articleHtml = `
       <div class="row article">
         <div class="col-10">
           <h3 class="abstractHdr">${article.text}</h3>
         </div>
         <div class="col-2">
-          <button type="button" data-articleId="${article.id}" class="btn btn-info"><i class="far fa-save"></i> Save Article</button>
+          <button type="button" data-articleText="${article.text}" class="saveArticleBtn btn btn-info"><i class="far fa-save"></i> Save Article</button>
         </div>
       </div>
     `;

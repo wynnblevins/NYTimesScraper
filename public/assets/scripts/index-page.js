@@ -6,8 +6,8 @@
   }
 
   $(document).on('click', '.saveArticleBtn', function () {
-    var articleId = $(this).data('articleid');
-    console.log(articleId);
+    var article = $(this).data(article);
+    console.log(article);
   });
 
   $(document).ready(function () {
