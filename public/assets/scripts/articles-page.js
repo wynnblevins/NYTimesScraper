@@ -15,7 +15,7 @@
             <button type="button" data-articleId="${article._id}" 
               class="addNoteBtn btn btn-success"><i class="far fa-edit"></i> Add Note</button>
             <button type="button" data-articleId="${article._id}" 
-              class="deleteNoteBtn btn btn-danger"><i class="far fa-trash-alt"></i> Delete Note</button>
+              class="removeArticleBtn btn btn-danger"><i class="far fa-trash-alt"></i> Remove</button>
           </div>
         </div>
       </div>
@@ -26,6 +26,10 @@
 
   function fetchSavedArticles() {
     $.get('/api/articles/saved').then((articlesData) => {
+      // remove what exists on page already to prevent duplicates
+      $articlesWrapper.empty();
+      
+      // attach retrieved articles
       for (var i = 0; i < articlesData.length; i++) {
         attachArticle(articlesData[i]);
       }
@@ -36,6 +40,23 @@
     // load stored articles
     fetchSavedArticles();
   }
+
+  $(document).on('click', '.removeArticleBtn', function () {
+    var articleId = $(this).data('articleid');
+    
+    $.ajax({
+      url: `/api/articles/saved/${articleId}`,
+      type: 'DELETE', 
+      success: function () {
+        fetchSavedArticles();
+      }
+    });
+  });
+
+  $(document).on('click', '.saveArticleBtn', function () {
+    var articleId = $(this).data('articleId');
+
+  });
 
   $(document).ready(function () {
     onInit();

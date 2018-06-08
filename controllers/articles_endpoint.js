@@ -1,5 +1,6 @@
 var cheerio = require("cheerio");
 var request = require('request');
+
 module.exports = function (app, db) {
   app.get('/api/articles', function(req, res) {
     request('https://www.nytimes.com/', 
@@ -48,6 +49,18 @@ module.exports = function (app, db) {
     });
   });
 
+  app.delete('/api/articles/saved/:articleId', function (req, res) {
+    let articleId = req.params.articleId;
+    
+    db.Article.remove({ _id: articleId }, function(err) {
+      if (!err) {
+        res.sendStatus(204); // 204 Success with no content,
+      } else {
+        res.sendStatus(500);
+      }
+    });
+  });
+  
   app.get('/api/articles/saved/note', function (req, res) {
     console.log('Inside note GET endpoint for article');
   });
