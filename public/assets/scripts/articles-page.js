@@ -3,6 +3,8 @@
 
   let $articlesWrapper = $('#articlesWrapper');
 
+  let notes = [];
+
   function attachArticle(article) {
 
     let articleHtml = `    
@@ -51,6 +53,23 @@
         fetchSavedArticles();
       }
     });
+  });
+
+  $(document).on('click', '#addNoteButton', function () {
+    let note = $('#noteField').val();
+    notes.push(note);
+    console.log(notes);
+  });
+
+  $(document).on('click', '#editNotesButton', function () {
+    let articleId = $(this).data('articleid');
+    $.ajax({
+      url: `/api/articles/saved/${articleId}/note`,
+      type: 'GET', 
+      success: function (response) {
+        console.log(response)
+      }
+    });         
   });
 
   $(document).ready(function () {

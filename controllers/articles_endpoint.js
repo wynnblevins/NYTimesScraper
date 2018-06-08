@@ -61,11 +61,17 @@ module.exports = function (app, db) {
     });
   });
   
-  app.get('/api/articles/saved/note', function (req, res) {
-    console.log('Inside note GET endpoint for article');
+  app.get('/api/articles/saved/:articleId/note', function (req, res) {
+    db.Article.findOne({_id: req.params.articleId})
+      .populate('Note', 'body')  
+      .exec(function (err, article) {
+        console.log(article);
+    });
   });
 
-  app.post('/api/articles/saved/note', function (req, res) {
-    console.log('Inside note POST endpoint for article');
+  app.post('/api/articles/saved/:articleId/note', function (req, res) {
+    db.Note.create(req.body).then(function () {
+      res.send(res.body);
+    });
   });
 };
