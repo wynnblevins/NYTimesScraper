@@ -22,7 +22,7 @@ module.exports = function (app, db) {
           }
           
           var headline = {
-            text: headlineTxt
+            title: headlineTxt
           };
           
           headlines.push(headline);
@@ -36,9 +36,15 @@ module.exports = function (app, db) {
     });
   });
 
-  app.post('/api/articles', function (req, res) {
+  app.get('/api/articles/saved', function (req, res) {
+    db.Article.find({}).then(function (articles) {
+      res.send(articles);
+    });
+  });
+
+  app.post('/api/articles/saved', function (req, res) {
     db.Article.create(req.body).then(function (createdArticle) {
-      res.json(createdArticle);
+      res.send(createdArticle);
     });
   });
 };

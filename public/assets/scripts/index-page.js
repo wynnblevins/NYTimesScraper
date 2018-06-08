@@ -7,7 +7,7 @@
 
   $(document).on('click', '.saveArticleBtn', function () {
     var article = $(this).data(article);
-    $.post('/api/articles', {
+    $.post('/api/articles/saved', {
       title: article.articletext
     }).done(() => {
       console.log('saved article');
