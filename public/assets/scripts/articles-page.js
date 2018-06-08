@@ -13,7 +13,7 @@
         <div class="col-lg-3 col-md-5 col-sm-6">
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" data-articleId="${article._id}" 
-              class="addNoteBtn btn btn-success"><i class="far fa-pencil"></i> Add Note</button>
+              class="addNoteBtn btn btn-success"><i class="far fa-edit"></i> Add Note</button>
             <button type="button" data-articleId="${article._id}" 
               class="deleteNoteBtn btn btn-danger"><i class="far fa-trash-alt"></i> Delete Note</button>
           </div>
