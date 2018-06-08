@@ -26,9 +26,7 @@ var scraper = (function ($){
           <h3 class="abstractHdr">${article.text}</h3>
         </div>
         <div class="col-2">
-          <a href="#" class="btn btn-info"><i class="far fa-save"></i>
-
-          Save Article</a>
+          <button type="button" class="btn btn-info"><i class="far fa-save"></i> Save Article</button>
         </div>
       </div>
     `;
