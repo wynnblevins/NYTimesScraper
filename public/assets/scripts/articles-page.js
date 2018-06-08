@@ -7,11 +7,16 @@
 
     let articleHtml = `
       <div class="row article">
-        <div class="col-10">
+        <div class="col-lg-9 col-md-7 col-sm-6">
           <h3 class="abstractHdr">${article.title}</h3>
         </div>
-        <div class="col-2">
-          <button type="button" data-articleText="${article.title}" class="saveArticleBtn btn btn-info"><i class="far fa-save"></i> Save Article</button>
+        <div class="col-lg-3 col-md-5 col-sm-6">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" data-articleId="${article._id}" 
+              class="addNoteBtn btn btn-success"><i class="far fa-pencil"></i> Add Note</button>
+            <button type="button" data-articleId="${article._id}" 
+              class="deleteNoteBtn btn btn-danger"><i class="far fa-trash-alt"></i> Delete Note</button>
+          </div>
         </div>
       </div>
     `;
