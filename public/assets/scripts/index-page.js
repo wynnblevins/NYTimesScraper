@@ -7,7 +7,13 @@
 
   $(document).on('click', '.saveArticleBtn', function () {
     var article = $(this).data(article);
-    console.log(article);
+    $.post('/api/articles', {
+      title: article.articletext
+    }).done(() => {
+      console.log('saved article');
+    }).fail(() => {
+      console.error('something went wrong');
+    });
   });
 
   $(document).ready(function () {

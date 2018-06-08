@@ -1,6 +1,6 @@
 var cheerio = require("cheerio");
 var request = require('request');
-module.exports = function (app) {
+module.exports = function (app, db) {
   app.get('/api/articles', function(req, res) {
     request('https://www.nytimes.com/', 
       function(err, resp, html) {
@@ -33,6 +33,12 @@ module.exports = function (app) {
       else {
         res.send(err);
       }
+    });
+  });
+
+  app.post('/api/articles', function (req, res) {
+    db.Article.create(req.body).then(function (createdArticle) {
+      res.json(createdArticle);
     });
   });
 };
