@@ -3,26 +3,17 @@ var scraper = (function ($){
 
   let $articlesWrapper = $('#articlesWrapper');
 
-  $('#articlesNavLink').click(function () {
-    console.log('Articles nav item was clicked.');
-  });
-
-  $('#homeNavLink').click(function () {
-    console.log('Articles nav item was clicked.');
-  });
-
   $('#scrapeButton').click(() => {
     $.get('/api/articles', (data) => {
+      $('#articlesWrapper').empty();
+
       for (var i = 0; i < data.length; i++) {
         attachArticle(data[i]);
       }
-
-      
     });
   });
 
   let attachArticle = function (article) {
-
     let articleHtml = `
       <div class="row article">
         <div class="col-10">

@@ -5,15 +5,15 @@
 
   function attachArticle(article) {
 
-    let articleHtml = `
+    let articleHtml = `    
       <div class="row article">
         <div class="col-lg-9 col-md-7 col-sm-6">
           <h3 class="abstractHdr">${article.title}</h3>
         </div>
         <div class="col-lg-3 col-md-5 col-sm-6">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" data-articleId="${article._id}" 
-              class="addNoteBtn btn btn-success"><i class="far fa-edit"></i> Add Note</button>
+            <button class="btn btn-success" id="editNotesButton" 
+              data-toggle="modal" data-target="#notesModal"><i class="far fa-edit"></i> Edit Notes</button>
             <button type="button" data-articleId="${article._id}" 
               class="removeArticleBtn btn btn-danger"><i class="far fa-trash-alt"></i> Remove</button>
           </div>
@@ -51,11 +51,6 @@
         fetchSavedArticles();
       }
     });
-  });
-
-  $(document).on('click', '.saveArticleBtn', function () {
-    var articleId = $(this).data('articleId');
-
   });
 
   $(document).ready(function () {
