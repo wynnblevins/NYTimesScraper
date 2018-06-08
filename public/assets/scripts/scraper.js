@@ -16,6 +16,8 @@ var scraper = (function ($){
       for (var i = 0; i < data.length; i++) {
         attachArticle(data[i]);
       }
+
+      
     });
   });
 

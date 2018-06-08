@@ -47,4 +47,12 @@ module.exports = function (app, db) {
       res.send(createdArticle);
     });
   });
+
+  app.get('/api/articles/saved/note', function (req, res) {
+    console.log('Inside note GET endpoint for article');
+  });
+
+  app.post('/api/articles/saved/note', function (req, res) {
+    console.log('Inside note POST endpoint for article');
+  });
 };
