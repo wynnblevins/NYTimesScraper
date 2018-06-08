@@ -13,9 +13,18 @@ module.exports = function (app) {
         var links = $('h2.story-heading > a');
         
         for (var i = 0; i < linksCount; i++) {
+          var headlineTxt = '';
+          for (var j = 0; j < links[i].childNodes.length; j++) {
+            // making sure data is not undefined
+            if (links[i].children[j].data) {
+              headlineTxt += links[i].children[j].data;
+            }
+          }
+          
           var headline = {
-            text: links[i].children[0].data
+            text: headlineTxt
           };
+          
           headlines.push(headline);
         }
 
