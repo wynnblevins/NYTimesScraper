@@ -3,10 +3,38 @@
 
   let $articlesWrapper = $('#articlesWrapper');
 
+  function createModal(article) {
+    var modalTemplate = `
+    <div class="modal fade" id="${article._id}" tabindex="-1" 
+    role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="text" class="control-label col-xs-4">Text Field</label> 
+              <div class="col-xs-8">
+                <div class="input-group">
+                  <input id="noteField" id="text" name="text" type="text" class="form-control">
+                </div>
+              </div>
+            </div> 
+          </div>
+          <div class="modal-footer">
+            <button type="button" 
+              data-dismiss="modal" data-article="${article._id}" 
+              id="submitNotesButton" class="btn btn-primary">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `
+    return modalTemplate;
+  }
+
   let notes = [];
 
   function attachArticle(article) {
-
+    console.log(article);
     let articleHtml = `    
       <div class="row article">
         <div class="col-lg-9 col-md-7 col-sm-6">
@@ -15,14 +43,14 @@
         <div class="col-lg-3 col-md-5 col-sm-6">
           <div class="btn-group" role="group" aria-label="Basic example">
             <button class="btn btn-success" id="editNotesButton" 
-              data-toggle="modal" data-target="#notesModal"><i class="far fa-edit"></i> Edit Notes</button>
-            <button type="button" data-articleId="${article._id}" 
+              data-toggle="modal" data-target="#${article._id}"><i class="far fa-edit"></i> Edit Notes</button>
+            <button type="button" data-articleid="${article._id}"
               class="removeArticleBtn btn btn-danger"><i class="far fa-trash-alt"></i> Remove</button>
           </div>
         </div>
       </div>
     `;
-    
+    // associating modal with article via data-target
     $articlesWrapper.append(articleHtml);
   };
 
@@ -34,6 +62,8 @@
       // attach retrieved articles
       for (var i = 0; i < articlesData.length; i++) {
         attachArticle(articlesData[i]);
+        var modalMarkup = createModal(articlesData[i]);
+        $('body').append(modalMarkup);
       }
     });
   }
@@ -42,6 +72,18 @@
     // load stored articles
     fetchSavedArticles();
   }
+
+  $(document).on('click', 'button#submitNotesButton', function () {
+    var articleId = $(this).data('article');
+    var note = $('#noteField').val();
+    
+    $.post(`/api/articles/saved/${articleId}/note`, {
+      body: note,
+      articleId: articleId
+    }, (data) => {
+      console.log(data);
+    })
+  });
 
   $(document).on('click', '.removeArticleBtn', function () {
     var articleId = $(this).data('articleid');
@@ -53,23 +95,6 @@
         fetchSavedArticles();
       }
     });
-  });
-
-  $(document).on('click', '#addNoteButton', function () {
-    let note = $('#noteField').val();
-    notes.push(note);
-    console.log(notes);
-  });
-
-  $(document).on('click', '#editNotesButton', function () {
-    let articleId = $(this).data('articleid');
-    $.ajax({
-      url: `/api/articles/saved/${articleId}/note`,
-      type: 'GET', 
-      success: function (response) {
-        console.log(response)
-      }
-    });         
   });
 
   $(document).ready(function () {

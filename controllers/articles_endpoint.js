@@ -70,8 +70,17 @@ module.exports = function (app, db) {
   });
 
   app.post('/api/articles/saved/:articleId/note', function (req, res) {
-    db.Note.create(req.body).then(function () {
-      res.send(res.body);
-    });
+    db.Note.create(req.body).then(function (dbNote) {
+      
+      db.Article.findOneAndUpdate(
+        { _id: req.params.articleId }, 
+        { $set: {notes: dbNote._id }}, 
+        { new: false }
+      ).then(function (err, doc) {
+        if (!err) {
+          res.send()
+        }
+      });
+    })
   });
 };
