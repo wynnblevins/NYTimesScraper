@@ -63,7 +63,7 @@ module.exports = function (app, db) {
   
   app.get('/api/articles/saved/:articleId/note', function (req, res) {
     db.Article.findOne({_id: req.params.articleId})
-      .populate('Note', 'body')  
+      .populate('notes')  
       .exec(function (err, article) {
         console.log(article);
     });
