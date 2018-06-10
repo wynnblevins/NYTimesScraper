@@ -22,11 +22,17 @@ module.exports = function (app, db) {
             }
           }
           
-          var headline = {
-            title: headlineTxt
-          };
+          let headline = null;
+          if (headlineTxt) {
+            headline = {
+              title: headlineTxt
+            };
+          } 
           
-          headlines.push(headline);
+          // logic to keep empty headlines out of app
+          if (headline) {
+            headlines.push(headline);
+          }
         }
 
         res.send(headlines);
