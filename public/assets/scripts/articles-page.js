@@ -4,8 +4,8 @@
   let $articlesWrapper = $('#articlesWrapper');
 
   function createModal(article) {
-    var modalTemplate = `
-    <div class="modal fade" id="${article._id}" tabindex="-1" 
+    let modalTemplate = `
+    <div class="modal fade" id="modal${article._id}" tabindex="-1" 
     role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -14,14 +14,14 @@
               <label for="text" class="control-label col-xs-4">Text Field</label> 
               <div class="col-xs-8">
                 <div class="input-group">
-                  <input id="noteField" id="text" name="text" type="text" class="form-control">
+                  <input id="text" name="text" type="text" class="form-control noteField">
                 </div>
               </div>
             </div> 
           </div>
           <div class="modal-footer">
             <button type="button" 
-              data-dismiss="modal" data-article="${article._id}" 
+              data-article="${article._id}" 
               id="submitNotesButton" class="btn btn-primary">OK</button>
           </div>
         </div>
@@ -30,8 +30,6 @@
     `
     return modalTemplate;
   }
-
-  let notes = [];
 
   function attachArticle(article) {
     console.log(article);
@@ -42,8 +40,9 @@
         </div>
         <div class="col-lg-3 col-md-5 col-sm-6">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button class="btn btn-success" id="editNotesButton" 
-              data-toggle="modal" data-target="#${article._id}"><i class="far fa-edit"></i> Edit Notes</button>
+            <button class="btn btn-success editNotesButton" data-articleid="${article._id}">
+              <i class="far fa-edit"></i> Edit Notes
+            </button>
             <button type="button" data-articleid="${article._id}"
               class="removeArticleBtn btn btn-danger"><i class="far fa-trash-alt"></i> Remove</button>
           </div>
@@ -60,9 +59,9 @@
       $articlesWrapper.empty();
       
       // attach retrieved articles
-      for (var i = 0; i < articlesData.length; i++) {
+      for (let i = 0; i < articlesData.length; i++) {
         attachArticle(articlesData[i]);
-        var modalMarkup = createModal(articlesData[i]);
+        let modalMarkup = createModal(articlesData[i]);
         $('body').append(modalMarkup);
       }
     });
@@ -73,15 +72,32 @@
     fetchSavedArticles();
   }
 
+  $(document).on('click', 'button.editNotesButton', function () {
+    var articleId = $(this).data('articleid');
+    let noteId = $(this).data('noteid');
+
+    $.get(`/api/articles/saved/${articleId}/note`)
+      .then(function (articleData) {
+        $(`#modal${articleId}`).modal('toggle');
+        
+        // first time an article's notes are retrieved, notes is 
+        // nonexistant, this if statement keeps unknown property related  
+        // errors out of console and keep things nice for other devs :-)
+        if (articleData.notes && articleData.notes.body) {
+          $(`#modal${articleId} input.form-control.noteField`).val(articleData.notes.body);
+        }
+      });
+  });
+
   $(document).on('click', 'button#submitNotesButton', function () {
     var articleId = $(this).data('article');
-    var note = $('#noteField').val();
+    var note = $('div.modal.fade.show input.form-control.noteField').val();
     
     $.post(`/api/articles/saved/${articleId}/note`, {
       body: note,
       articleId: articleId
     }, (data) => {
-      console.log(data);
+      $(`#modal${articleId}`).modal('toggle');
     })
   });
 
